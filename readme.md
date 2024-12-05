@@ -1,18 +1,54 @@
-# A Containerized Hello World Java deployment with Docker 
+# Emumba App Helm Chart
 
-a very simple rest-api-hello-world java application with Spring Boot and Maven, containerized with dockerfile, ready to build and deployed with a very simple way.
+This Helm chart deploys an application consisting of **one microservice of java application**: **rankbang**, .  microservice has its own Deployment, Service, 
 
-## How to Build
-```
-docker build -t hello-world-java-docker .
-```  
+## Table of Contents
 
-## How to Run
-```
-docker run -it hello-world-java-docker
-```
+- [Introduction](#introduction)
+- [Microservices Overview](#microservices-overview)
+  - [rankbang Service](#frontend-service)
 
-## Blog Post
-```
-https://edwin.baculsoft.com/2020/07/building-containerized-images-on-openshift-4-and-push-the-result-to-third-party-image-registry/
-```
+
+---
+
+## Introduction
+
+This Helm chart facilitates deploying the **java sHello App** on a Kubernetes cluster. The app  microservices: **rankbang** for modular and scalable deployment.
+
+### Key Features
+
+- Deployment and Service for each microservice.
+- Helm values file for easy customization.
+
+---
+
+## Microservices Overview
+
+### rankbang Service
+
+- **Purpose**: Provides the user interface for the application.
+- **Components**:
+  - `rankbang-deployment.yaml`: Deployment manifest for the frontend.
+  - `rankbang-service.yaml`: Service manifest for frontend accessibility.
+  - `ingress.yaml` : manifest for ingress deployment
+
+
+## Prerequisites
+
+- Kubernetes cluster (v1.20 or later).
+- Helm (v3.5 or later).
+- Configured `kubectl` access to the Kubernetes cluster.
+
+---
+
+## Installation
+
+1. Connect with your cluster 
+
+   ```bash
+   aws eks update-kubeconfig --name `Cluster name` --region `region name`
+
+2. install helm chart 
+
+   ```bash
+   helm upgrade -i emumba-app ./path/to/your/chart
