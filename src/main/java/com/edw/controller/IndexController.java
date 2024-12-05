@@ -16,8 +16,7 @@ public class IndexController {
         logger.debug("request served");
 
         return new HashMap<>() {{
-            put("success", true);
-            put("hello", "rankbang from Usama Devop");
+            put("Hello RankBang", ": From Senior Devop USAMA :)");
         }};
     }
 }
