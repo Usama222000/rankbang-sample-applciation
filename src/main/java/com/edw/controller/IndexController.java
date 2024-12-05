@@ -17,8 +17,7 @@ public class IndexController {
 
         return new HashMap<>() {{
             put("success", true);
-            put("hello", "usama10");
-            put("new-message", "adding a new msg");
+            put("hello", "rankbang from Usama Devop");
         }};
     }
 }
