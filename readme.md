@@ -1,4 +1,4 @@
-# Emumba App Helm Chart
+# Rankbang Helm Chart
 
 This Helm chart deploys an application consisting of **one microservice of java application**: **rankbang**, .  microservice has its own Deployment, Service, 
 
