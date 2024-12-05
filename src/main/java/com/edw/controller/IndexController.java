@@ -16,7 +16,7 @@ public class IndexController {
         logger.debug("request served");
 
         return new HashMap<>() {{
-            put("Hello RankBang", "From Senior Devop USAMA :)");
+            put("Hello RankBanK", "sorry from Devop Usama as i have mistakenly write rankbang instead of  rankbank in my whole project and i realized it after submission :()");
         }};
     }
 }
