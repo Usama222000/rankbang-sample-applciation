@@ -54,11 +54,14 @@ jobs:
       - name: Push Docker Image to ECR
         run: docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.API_REPO_NAME }}:${{ github.sha }}
 
+      - name: EKS cluster connection
+        run: |
+          aws eks --region $region update-kubeconfig --name ${{env.cluster_name}}
 
-      # - name: Deploy API Helm Chart
-      #   run: |
-      #     helm upgrade --install rank_bang_chart ./api_helm_chart \
-      #     -f ./rank_bang_chart/values.yaml \
-      #     --set image.repository="${{ steps.login-ecr.outputs.registry }}/${{ env.API_REPO_NAME }}:${{ github.sha }}" \
-      #     --force
-      #     rm -rf ~/.kube
+      - name: Deploy API Helm Chart
+        run: |
+          helm upgrade --install rank_bang_chart ./api_helm_chart \
+          -f ./rank_bang_chart/values.yaml \
+          --set image.repository="${{ steps.login-ecr.outputs.registry }}/${{ env.API_REPO_NAME }}:${{ github.sha }}" \
+          --force
+          rm -rf ~/.kube
