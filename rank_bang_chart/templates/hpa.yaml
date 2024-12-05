@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: rankbang
+  namespace: default
+spec:
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: {{ .Values.autoscaling.targetCPU}}
+        type: Utilization
+    type: Resource
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.autoscaling.deployment_name }}

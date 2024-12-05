@@ -1,0 +1,91 @@
+---
+# Source: api_helm_chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellobibleapi
+spec:
+  selector:
+    app: hellobibleapi 
+  ports:
+    - protocol: TCP
+      port: 80 
+      targetPort: 3000 
+  type: ClusterIP
+---
+# Source: api_helm_chart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellobibleapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellobibleapi
+  template:
+    metadata:
+      labels:
+        app: hellobibleapi
+    spec:
+      containers:
+      - name: hellobibleapi
+        image:  905418367633.dkr.ecr.eu-west-3.amazonaws.com/preprod_hellobible_api:64cb51da95c28f497700651949cbb88abcad347d
+        envFrom:
+        - secretRef:
+            name: hellobibleapi
+        resources:
+          requests:
+            memory:  100Mi
+            cpu:  500m
+---
+# Source: api_helm_chart/templates/hpa.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hellobibleapi
+  namespace: default
+spec:
+  maxReplicas: 2
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 60
+        type: Utilization
+    type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hellobibleapi
+---
+# Source: api_helm_chart/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hellobibleapi
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - api.preprod.hellobible.ai
+      secretName: hellobibleapi-tls
+  rules:
+  - host: api.preprod.hellobible.ai
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: hellobibleapi
+              port:
+                number:  80

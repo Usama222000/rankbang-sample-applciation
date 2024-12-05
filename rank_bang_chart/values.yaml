@@ -1,0 +1,25 @@
+
+# volumePersistent:
+#   enabled: true
+#   pvcName: rankbang-pvc
+envSecretName: rankbang
+replicaCount: 1
+image:
+  repository: 793180302321.dkr.ecr.us-east-1.amazonaws.com/rankbang-default:latest          
+resources:
+  cpu: "500m"
+  memory: "100Mi"   
+Ingress:
+  hostDns: api.preprod.hellobible.ai
+  Path: /
+  serviceName: rankbang
+  servicePort: 80
+  #tlsSecretName: rankbang-tls
+
+autoscaling:
+  deployment_name: rankbang
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPU: "60"
+

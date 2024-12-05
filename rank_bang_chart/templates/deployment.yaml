@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rankbang
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: rankbang
+  template:
+    metadata:
+      labels:
+        app: rankbang
+    spec:
+      containers:
+      - name: rankbang
+        image:  {{ .Values.image.repository }}
+        resources:
+          requests:
+            memory:  {{ .Values.resources.memory }}
+            cpu:  {{ .Values.resources.cpu }}
+        
+
+
