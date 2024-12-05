@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy API Helm Chart
         run: |
-          helm upgrade --install rank_bang_chart ./api_helm_chart \
+          helm upgrade --install rankbang ./rank_bang_chart \
           -f ./rank_bang_chart/values.yaml \
           --set image.repository="${{ steps.login-ecr.outputs.registry }}/${{ env.API_REPO_NAME }}:${{ github.sha }}" \
           --force
