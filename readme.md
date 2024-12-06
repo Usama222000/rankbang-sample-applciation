@@ -1,6 +1,6 @@
-# Rankbang Helm Chart
+# Rankbank Helm Chart
 
-This Helm chart deploys an application consisting of **one microservice of java application**: **rankbang**, .  microservice has its own Deployment, Service, 
+This Helm chart deploys an application consisting of **one microservice of java application**: **rankbank**, .  microservice has its own Deployment, Service, 
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ This Helm chart deploys an application consisting of **one microservice of java 
 
 ## Introduction
 
-This Helm chart facilitates deploying the **java sHello App** on a Kubernetes cluster. The app  microservices: **rankbang** for modular and scalable deployment.
+This Helm chart facilitates deploying the **java sHello App** on a Kubernetes cluster. The app  microservices: **rankbank** for modular and scalable deployment.
 
 ### Key Features
 
@@ -24,7 +24,7 @@ This Helm chart facilitates deploying the **java sHello App** on a Kubernetes cl
 
 ## Microservices Overview
 
-### rankbang Service
+### rankbank Service
 
 - **Purpose**: Provides the user interface for the application.
 - **Components**:
